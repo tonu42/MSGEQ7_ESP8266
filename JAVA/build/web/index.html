@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            
+             var wsURI = "ws://192.168.0.18:8080/MSGEQ7/endpoint";
+            var socket = new WebSocket(wsURI);
+            var jsonMessage;
+            
+            socket.onmessage = function(evt) { onMessage(evt); };
+            
+             socket.onopen = function(evt) { onOpen(evt); };
+            
+            function sendMessage() {
+                socket.send(document.getElementById("sendData").value);
+                document.getElementById("sendData").value = "";
+                //console.log(document.getElementById("sendData").value);
+            }
+            
+            function onOpen(evt){
+               // socket.send("ESP8266");
+               console.log("Connected");
+               socket.send("Connected");
+            }
+            
+            function onMessage(evt) { 
+                console.log(evt.data); 
+                jsonMessage = JSON.parse(evt.data);
+                
+                setTimeout( graph(), 0 );
+                
+                
+                
+                
+            }
+            
+            function graph(){
+                document.getElementById("spec0").value = jsonMessage.spec0;
+                document.getElementById("spec1").value = jsonMessage.spec1;
+                document.getElementById("spec2").value = jsonMessage.spec2;
+                document.getElementById("spec3").value = jsonMessage.spec3;
+                document.getElementById("spec4").value = jsonMessage.spec4;
+                document.getElementById("spec5").value = jsonMessage.spec5;
+                document.getElementById("spec6").value = jsonMessage.spec6;
+                
+            }
+            
+        </script>
+        <style>
+            
+            progress{
+                
+        -webkit-transform-origin: center left;
+	-webkit-transform: rotate(-90deg) translateX(-100%);
+        margin-right: -350px;
+        height: 35px;
+        width: 455px;
+        background-color: #999999;
+        
+        
+            }
+            
+            
+            
+        </style>
+    </head>
+    <body>
+        
+        <progress style="margin-left: 50px;" id="spec0"  value="0" max="255"></progress> 
+        
+        
+        
+           <progress id="spec1"   value="0" max="255"> </progress> 
+       
+        
+           <progress id="spec2"  value="0" max="255"> </progress> 
+        
+        
+           <progress id="spec3"  value="0" max="255"> </progress> 
+        
+        
+           <progress id="spec4"  value="0" max="255"> </progress> 
+        
+        
+           <progress id="spec5"  value="0" max="255"> </progress> 
+        
+        
+           <progress id="spec6"  value="0" max="255"> </progress> 
+        
+           
+        
+    </body>
+</html>
